@@ -9,13 +9,6 @@ Ext.define('phase3.controller.StudentGridController', {
         }).show();
     },
 
-    onAddClick: function () {
-        var studentData;
-        Ext.create('phase3.view.student.StudentWindow', {
-            viewModel: {data: {student: studentData}}
-        }).show();
-    },
-
     onRemoveClick: function (grid, rowIndex) {
         var studentStore = grid.getStore(),
         record = studentStore.getAt(rowIndex); //Get the clicked record
@@ -32,7 +25,6 @@ Ext.define('phase3.controller.StudentGridController', {
                     Ext.Ajax.request({
                         url: url,
                         method: 'DELETE',
-                        clientValidation: true,
                         waitMsg: 'Deleting..',
                         headers:
                             {'Content-Type': 'application/json'},
