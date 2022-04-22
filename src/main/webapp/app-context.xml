@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+<!--  <mvc:view-controller path="/" view-name="homepage"/>-->
+  <mvc:annotation-driven />
+  <context:component-scan base-package="com.phase3.controller"/>
+  <context:component-scan base-package="com.phase3.service"/>
+
+  <mvc:cors>
+    <mvc:mapping path="/**"
+                 allowed-origins="http://localhost:1841, http://localhost"
+                 allowed-headers="*"
+                 allowed-methods="*"
+                 allow-credentials="true"/>
+  </mvc:cors>
+
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize" value="10000000"/>
+  </bean>
+
+  <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+    <property name="prefix" value="/WEB-INF/jsp/"/>
+    <property name="suffix" value=".jsp"/>
+  </bean>
+
+  <bean id="studentDao" class="com.phase3.dao.impl.DefaultStudentDao"/>
+  <bean id="groupDao" class="com.phase3.dao.impl.DefaultGroupDao"/>
+  <bean id="courseDao" class="com.phase3.dao.impl.DefaultCourseDao"/>
+  <bean id="teacherDao" class="com.phase3.dao.impl.DefaultTeacherDao"/>
+  <bean id="phoneDao" class="com.phase3.dao.impl.DefaultPhoneDao"/>
+  <bean id="phoneTypesDao" class="com.phase3.dao.impl.DefaultPhoneTypesDao"/>
+  <bean id="addressDao" class="com.phase3.dao.impl.DefaultAddressDao"/>
+  <bean id="membershipDao" class="com.phase3.dao.impl.DefaultMembershipDao"/>
+
+  <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+    <property name="dataSourceClassName" value="org.postgresql.ds.PGSimpleDataSource"/>
+    <property name="dataSourceProperties">
+      <props>
+        <prop key="url">jdbc:postgresql://localhost/postgres</prop>
+        <prop key="user">postgres</prop>
+        <prop key="password">postgres</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="packagesToScan" value="com.phase3.model"/>
+    <property name="dataSource" ref="dataSource"/>
+    <property name="jpaVendorAdapter">
+      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="false"/>
+      </bean>
+    </property>
+  </bean>
+  <!-- Transactions -->
+  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+  </bean>
+  <tx:annotation-driven/>
+
+
+</beans>

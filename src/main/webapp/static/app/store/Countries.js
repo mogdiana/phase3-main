@@ -1,0 +1,31 @@
+Ext.define('phase3.store.Countries', {
+    extend: 'Ext.data.ArrayStore',
+    alias: 'store.countries',
+    model: 'phase3.model.Country',
+    storeId: 'countries',
+
+    data: [
+        [0, 'BE', 'Belgium'],
+        [1, 'BG', 'Bulgaria'],
+        [2, 'CZ', 'Czechia'],
+        [3, 'DK', 'Denmark'],
+        [4, 'DE', 'Germany'],
+        [5, 'EE', 'Estonia'],
+        [6, 'IE', 'Ireland'],
+        [7, 'EL', 'Greece'],
+        [8, 'ES', 'Spain'],
+        [9, 'FR', 'France'],
+        [10, 'IT', 'Italy'],
+        [11, 'HR', 'Croatia'],
+        [12, 'LV', 'Latvia'],
+        [13, 'LT', 'Lithuania'],
+        [14, 'HU', 'Hungary'],
+        [15, 'AT', 'Austria'],
+        [16, 'PL', 'Poland'],
+        [17, 'PT', 'Portugal'],
+        [18, 'RO', 'Romania'],
+        [19, 'RM', 'Moldova'],
+        [20, 'RU', 'Russia'],
+        [21, 'US', 'United States'],
+    ]
+});
